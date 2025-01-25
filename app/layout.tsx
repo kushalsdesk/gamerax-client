@@ -1,8 +1,7 @@
 import Head from "next/head";
 import "./globals.css";
 import { Outfit } from "next/font/google";
-import { Suspense } from "react";
-import Loading from "./loading";
+import Background from "@/components/Background";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -27,7 +26,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} font-sans min-h-screen bg-[#0F1116] text-white overflow-x-hidden`}
       >
-        {children}
+        <Background>{children}</Background>
       </body>
     </html>
   );

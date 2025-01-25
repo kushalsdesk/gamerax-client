@@ -1,7 +1,9 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+"use client";
+
 import { useState } from "react";
-import GameCard from "./Game";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 const games = {
   upcoming: [
@@ -117,11 +119,46 @@ const games = {
   ],
 };
 
-const GameShowcase = () => {
+const GameCard = ({ title, image, rating, releaseDate, players }: any) => (
+  <motion.div
+    layout
+    className="group relative overflow-hidden rounded-2xl bg-[#1A1B20]/30 border border-white/5"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    whileHover={{ scale: 1.02 }}
+    transition={{ duration: 0.2 }}
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <img
+      src={image || "/placeholder.svg"}
+      alt={title}
+      className="w-full h-48 object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-[#0F1116] via-transparent to-transparent" />
+    <div className="absolute bottom-0 left-0 p-4">
+      <h3 className="text-lg font-medium text-white mb-1">{title}</h3>
+      <div className="flex items-center space-x-3">
+        <div className="flex items-center">
+          <span className="text-yellow-400">★</span>
+          <span className="ml-1 text-sm text-gray-400">{rating}</span>
+        </div>
+        {releaseDate && (
+          <div className="text-sm text-gray-400">Release: {releaseDate}</div>
+        )}
+        {players && (
+          <div className="text-sm text-gray-400">{players} Players</div>
+        )}
+      </div>
+    </div>
+  </motion.div>
+);
+
+export default function GameShowcase() {
   const [activeCategory, setActiveCategory] = useState("upcoming");
 
   return (
-    <section id="games" className="py-20">
+    <section className="py-20">
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center mb-12">
           <h2 className="text-3xl font-medium text-white mb-8">
@@ -158,14 +195,15 @@ const GameShowcase = () => {
           </motion.div>
         </AnimatePresence>
         <div className="flex justify-center mt-8">
-          <button className="group flex items-center text-sm text-violet-400 hover:text-violet-300 transition-colors">
+          <Link
+            href="/games"
+            className="group flex items-center text-sm text-violet-400 hover:text-violet-300 transition-colors"
+          >
             View All Games
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
   );
-};
-
-export default GameShowcase;
+}

@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -34,7 +35,7 @@ const Navbar = () => {
           </Link>
           <div className="hidden md:flex items-center justify-center space-x-8 flex-1 px-8">
             <Link
-              href="#games"
+              href="/games"
               className="text-sm text-gray-300 hover:text-white transition-colors"
             >
               Games
